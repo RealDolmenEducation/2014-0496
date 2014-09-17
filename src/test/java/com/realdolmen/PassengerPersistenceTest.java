@@ -13,10 +13,8 @@ public class PassengerPersistenceTest extends PersistenceTest {
 	public void passengerCanBePersisted() {
 		Passenger passenger = new Passenger("Jimi", "Hendrix", "00001");
 		entityManager().persist(passenger);
-
-		assertNotNull(passenger.getId());
 	}
-	
+
 	@Test
 	public void passengersCanBeRetrieved() {
 		List<Passenger> passengers = entityManager().createNamedQuery(
