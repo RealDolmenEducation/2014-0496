@@ -1,7 +1,11 @@
 package com.realdolmen.entity;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +13,9 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "passengers")
@@ -20,7 +27,17 @@ public class Passenger {
 	@EmbeddedId
 	private PassengerId id;
 
+	@Column(length = 50)
 	private String firstName;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dateOfBirth;
+	
+	@Transient
+	private int age;
+	
+	@Embedded
+	private Address address;
 
 	@Column(table = "passenger_details")
 	private Integer frequentFlyerMiles;
@@ -33,13 +50,25 @@ public class Passenger {
 	/**
 	 * Used by JPA.
 	 */
+	@SuppressWarnings("unused")
 	private Passenger() {
 	}
 
-	public Passenger(String firstName, String lastName, String socialSecurityNumber) {
-		this.id = new PassengerId(firstName, socialSecurityNumber);
+	public Passenger(String firstName, String lastName, String socialSecurityNumber, Date dateOfBirth, byte[] picture, Address address) {
+		this.id = new PassengerId(lastName, socialSecurityNumber);
 		this.firstName = firstName;
+		this.dateOfBirth = dateOfBirth;
+		this.age = calculateAge();
+		this.address = address;
 		this.frequentFlyerMiles = 0;
+		this.picture = picture;
+	}
+
+	private int calculateAge() {
+		Calendar birthDate = Calendar.getInstance();
+		birthDate.setTime(dateOfBirth);
+		Calendar now = Calendar.getInstance();
+		return now.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);		
 	}
 
 	public String getSocialSecurityNumber() {
@@ -56,5 +85,17 @@ public class Passenger {
 
 	public int getFrequentFlyerMiles() {
 		return frequentFlyerMiles;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	
+	public Date getDateOfBirth() {
+		return dateOfBirth;
 	}
 }

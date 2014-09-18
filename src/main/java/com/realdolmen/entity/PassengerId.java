@@ -2,23 +2,27 @@ package com.realdolmen.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class PassengerId implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Column(length = 150)
 	private String lastName;
+	
+	@Column(length = 20, nullable = false, updatable = false)
 	private String socialSecurityNumber;
 	
 	/**
 	 * Used by JPA.
 	 */
+	@SuppressWarnings("unused")
 	private PassengerId() {
 	}
 	
 	public PassengerId(String lastName, String socialSecurityNumber) {
-		super();
 		this.lastName = lastName;
 		this.socialSecurityNumber = socialSecurityNumber;
 	}
