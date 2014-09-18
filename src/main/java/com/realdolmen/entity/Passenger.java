@@ -1,6 +1,8 @@
 package com.realdolmen.entity;
 
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -9,8 +11,10 @@ import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -46,6 +50,13 @@ public class Passenger {
 	@Basic(fetch = FetchType.LAZY)
 	@Column(table = "passenger_details")
 	private byte[] picture;
+	
+	@OneToMany(mappedBy = "passenger")
+	private Collection<Ticket> tickets;
+	
+	void addTicket(Ticket ticket) {
+		this.tickets.add(ticket);
+	}
 
 	/**
 	 * Used by JPA.
@@ -97,5 +108,13 @@ public class Passenger {
 	
 	public Date getDateOfBirth() {
 		return dateOfBirth;
+	}
+	
+	public Collection<Ticket> getTickets() {
+		return Collections.unmodifiableCollection(tickets);
+	}
+
+	public void setFrequentFlyerMiles(Integer frequentFlyerMiles) {
+		this.frequentFlyerMiles = frequentFlyerMiles;
 	}
 }

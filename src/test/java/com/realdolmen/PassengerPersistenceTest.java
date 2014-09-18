@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.realdolmen.entity.Address;
 import com.realdolmen.entity.Passenger;
+import com.realdolmen.entity.PassengerId;
 
 public class PassengerPersistenceTest extends PersistenceTest {
 	@Test
@@ -56,4 +57,22 @@ public class PassengerPersistenceTest extends PersistenceTest {
 	public void passengerAgeIsCaclulatedCorrectly() {
 		assertEquals(68, newPassenger().getAge());
 	}
+	
+	@Test
+	public void passengerCanBeUpdate() {
+		Passenger p = entityManager().find(Passenger.class, new PassengerId("Joplin", "00002"));
+		
+		entityManager().detach(p);
+		
+		p.setFrequentFlyerMiles(p.getFrequentFlyerMiles() + 5000);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -15,7 +15,7 @@ public abstract class PersistenceTest {
     private static EntityManagerFactory entityManagerFactory;
 
     private EntityManager entityManager;
-    private EntityTransaction transaction;
+    protected EntityTransaction transaction;
 
     @BeforeClass
     public static void initializeEntityManagerFactory() {
