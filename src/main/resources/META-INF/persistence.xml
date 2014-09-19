@@ -11,9 +11,11 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/standalone"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value=""/>
-
-			<property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+			
+			<!-- Can better be done using logging configuration: see logback.xml -->
+			<!-- <property name="hibernate.show_sql" value="true"/> -->
+            <!-- <property name="hibernate.format_sql" value="true"/> -->
+            
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
             <property name="hibernate.hbm2ddl.auto" value="create" />
         </properties>

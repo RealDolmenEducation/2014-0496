@@ -7,6 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
+
 import org.junit.Test;
 
 import com.realdolmen.entity.Address;
@@ -66,6 +72,44 @@ public class PassengerPersistenceTest extends PersistenceTest {
 		
 		p.setFrequentFlyerMiles(p.getFrequentFlyerMiles() + 5000);
 	}
+	
+	
+	@Test
+	public void passengerNamesCanBeQueried() {
+		CriteriaBuilder builder = entityManager().getCriteriaBuilder();
+				
+		CriteriaQuery<String> q = builder.createQuery(String.class);		
+		
+		// ... from Passenger p
+		Root<Passenger> p = q.from(Passenger.class);				
+		
+		// select p.id.lastName ...
+		q.select(p.get("id").get("lastName").as(String.class));
+		q.where(builder.equal(p.get("firstName"), "Janis"));
+				
+		TypedQuery<String> query = entityManager().createQuery(q);
+		List<String> names = query.getResultList();	
+		assertEquals("Joplin", names.get(0));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
