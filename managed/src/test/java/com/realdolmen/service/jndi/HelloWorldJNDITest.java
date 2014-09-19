@@ -13,7 +13,7 @@ public class HelloWorldJNDITest {
     public void testSayHello() throws Exception {
     	
         InitialContext context = new InitialContext();
-        HelloWorld helloBean = (HelloWorld) context.lookup("jec010-getting-started/HelloWorldBean!com.realdolmen.service.HelloWorld");
+        HelloWorld helloBean = (HelloWorld) context.lookup("managed/HelloWorldBean!com.realdolmen.service.HelloWorld");
         String result = helloBean.sayHello("Jimi");
         assertEquals("Hello Jimi", result);
         
